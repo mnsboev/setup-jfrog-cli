@@ -69,6 +69,10 @@ jobs:
           jf npm publish --project takoshop  --registry https://${{ vars.JF_URL }}/artifactory/api/npm/carmit-prj-1-npm-local/
       - name: check file system
         run: |
-          ls -ltr 
+          ls /home/runner/work/setup-jfrog-cli/setup-jfrog-cli/jfrog-setup-jfrog-cli-4.0.2.tgz
+      - name: Attest
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: '/home/runner/work/setup-jfrog-cli/setup-jfrog-cli/jfrog-setup-jfrog-cli-4.0.2.tgz'
         
         
