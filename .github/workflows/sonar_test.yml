@@ -21,8 +21,8 @@ jobs:
         uses: jfrog/setup-jfrog-cli@v4
         env:
           JF_URL: https://${{ vars.JF_URL }}
-        with:
-         oidc-provider-name: jfrog-github-oidc
+          JF_ACCESS_TOKEN: ${{ secrets.JF_TOKEN }}
+        
 
       # Run --version
       - name: Check versions
