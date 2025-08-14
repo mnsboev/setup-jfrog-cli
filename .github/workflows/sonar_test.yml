@@ -70,6 +70,7 @@ jobs:
           jf npm publish --project takoshop  --registry https://${{ vars.JF_URL }}/artifactory/api/npm/carmit-prj-1-npm-local/
       - name: check file system
         run: |
+          pwd
           echo "-------/home/runner/work/setup-jfrog-cli/---------"
           ls /home/runner/work/setup-jfrog-cli/
           echo "-------/home/runner/work/setup-jfrog-cli/setup-jfrog-cli/---------"
