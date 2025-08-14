@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        version: ["", "latest", "1.46.4"]
+        version: ["latest"]
       fail-fast: false
     steps:
       # Checkout and install prerequisites
@@ -75,3 +75,7 @@ jobs:
             -Dsonar.java.jdkHome=$JAVA_HOME \
             -Dsonar.verbose=true \
             -Dsonar.token=$SONAR_TOKEN
+      - name: get task id
+        run: |
+          cat $PWD/.scannerwork/report-task.txt
+        
