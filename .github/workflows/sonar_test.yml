@@ -49,18 +49,19 @@ jobs:
           pwd
           ls -l $PWD/sonar-scanner-6.2.1.4610/bin/
           echo "$PWD/sonar-scanner-6.2.1.4610/bin"
-      //- name: Run SonarScanner
-      //  id: run-sonar-scanner
-      //  env:
-      //    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      //  run: |
-      //    $PWD/sonar-scanner-6.2.1.4610/bin/sonar-scanner \
-      //      -Dsonar.projectKey=setup-jfrog-cli \
-      //      -Dsonar.organization=my-evidence-test-org1 \
-      //      -Dsonar.host.url=https://sonarcloud.io \
-      //      -Dsonar.java.jdkHome=$JAVA_HOME \
-      //      -Dsonar.verbose=true \
-      //      -Dsonar.token=$SONAR_TOKEN
+          
+      #- name: Run SonarScanner
+      #  id: run-sonar-scanner
+      #  env:
+      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #  run: |
+      #    $PWD/sonar-scanner-6.2.1.4610/bin/sonar-scanner \
+      #      -Dsonar.projectKey=setup-jfrog-cli \
+      #      -Dsonar.organization=my-evidence-test-org1 \
+      #      -Dsonar.host.url=https://sonarcloud.io \
+      #      -Dsonar.java.jdkHome=$JAVA_HOME \
+      #      -Dsonar.verbose=true \
+      #      -Dsonar.token=$SONAR_TOKEN
       - name: get task id
         run: |
           cat $PWD/.scannerwork/report-task.txt
