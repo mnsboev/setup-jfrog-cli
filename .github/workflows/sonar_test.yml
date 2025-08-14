@@ -25,11 +25,10 @@ jobs:
           JF_PROJECT: "carmit-prj-1"
         with:
          oidc-provider-name: jfrog-github-oidc
-         
       - name: Generate .npmrc
         run: | 
            jfrog c show
-          jf npm-config --global --repo-resolve=carmit-prj-1-npm-remote --repo-deploy=carmit-prj-1-npm-local
+           jf npm-config --global --repo-resolve=carmit-prj-1-npm-remote --repo-deploy=carmit-prj-1-npm-local
           
       # Check build URL
       - name: Check build URL
