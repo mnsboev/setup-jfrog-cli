@@ -27,7 +27,9 @@ jobs:
           JF_PROJECT: "carmit-prj-1"
         with:
          oidc-provider-name: jfrog-github-oidc
-
+      - name: Generate .npmrc
+        run: jf npm-config --repo-resolve-releases=carmit-prj-1-npm-remote --repo-deploy-releases=carmit-prj-1-npm-local
+          
       # Run --version
       - name: Check versions
         run: jf --version && jfrog --version
