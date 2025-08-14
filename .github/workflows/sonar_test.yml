@@ -3,15 +3,10 @@ on: [push]
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     env:
       JF_ENV_LOCAL: eyJ2ZXJzaW9uIjoxLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwODEvYXJ0aWZhY3RvcnkvIiwidXNlciI6ImFkbWluIiwicGFzc3dvcmQiOiJBUEI3REVaUlBpSHFIRFRRb2tMa3g5aGh6S1QiLCJzZXJ2ZXJJZCI6ImxvY2FsIn0=
 
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        version: ["latest"]
-      fail-fast: false
     steps:
       # Checkout and install prerequisites
       - name: Checkout
@@ -21,15 +16,13 @@ jobs:
         with:
           node-version: "20.x"
 
-      # Run action according to the input version
-      - name: Setup JFrog CLI
-        if: matrix.version != ''
-        uses: ./
+      - name: Install jfrog cli
+        id:   setup-cli
+        uses: jfrog/setup-jfrog-cli@v4
+        env:
+          JF_URL: ${{ vars.JF_URL }}
         with:
-          version: ${{ matrix.version }}
-      - name: Setup default JFrog CLI
-        if: matrix.version == ''
-        uses: ./
+         oidc-provider-name: jfrog-github-oidc
 
       # Run --version
       - name: Check versions
@@ -52,7 +45,7 @@ jobs:
 
       # Install and run tests
       - name: Install
-        run: npm i
+        run: jf npm i --project takoshop 
       - name: Unit tests
         run: npm t
       - name: Install SonarQube Scanner
@@ -78,4 +71,9 @@ jobs:
       - name: get task id
         run: |
           cat $PWD/.scannerwork/report-task.txt
+      - name: publish to artifactory
+        run: |
+          jf npm publish --project takoshop  --registry https://${{ vars.JF_URL }}/artifactory/api/npm/takoshop-npm-local/
+          
+        
         
