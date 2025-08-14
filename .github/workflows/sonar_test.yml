@@ -14,6 +14,7 @@ jobs:
       # Checkout and install prerequisites
       - name: Checkout
         uses: actions/checkout@v4
+        
       - name: Setup NodeJS
         uses: actions/setup-node@v4
         with:
@@ -27,6 +28,7 @@ jobs:
           JF_PROJECT: "carmit-prj-1"
         with:
          oidc-provider-name: jfrog-github-oidc
+         
       - name: Generate .npmrc
         run: | 
            jfrog c show
