@@ -49,18 +49,18 @@ jobs:
           pwd
           ls -l $PWD/sonar-scanner-6.2.1.4610/bin/
           echo "$PWD/sonar-scanner-6.2.1.4610/bin"
-      - name: Run SonarScanner
-        id: run-sonar-scanner
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          $PWD/sonar-scanner-6.2.1.4610/bin/sonar-scanner \
-            -Dsonar.projectKey=setup-jfrog-cli \
-            -Dsonar.organization=my-evidence-test-org1 \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.java.jdkHome=$JAVA_HOME \
-            -Dsonar.verbose=true \
-            -Dsonar.token=$SONAR_TOKEN
+      //- name: Run SonarScanner
+      //  id: run-sonar-scanner
+      //  env:
+      //    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      //  run: |
+      //    $PWD/sonar-scanner-6.2.1.4610/bin/sonar-scanner \
+      //      -Dsonar.projectKey=setup-jfrog-cli \
+      //      -Dsonar.organization=my-evidence-test-org1 \
+      //      -Dsonar.host.url=https://sonarcloud.io \
+      //      -Dsonar.java.jdkHome=$JAVA_HOME \
+      //      -Dsonar.verbose=true \
+      //      -Dsonar.token=$SONAR_TOKEN
       - name: get task id
         run: |
           cat $PWD/.scannerwork/report-task.txt
@@ -69,7 +69,8 @@ jobs:
           jf npm publish --project takoshop  --registry https://${{ vars.JF_URL }}/artifactory/api/npm/carmit-prj-1-npm-local/
       - name: check file system
         run: |
-          ls /home/runner/work/setup-jfrog-cli/setup-jfrog-cli/jfrog-setup-jfrog-cli-4.0.2.tgz
+          ls /home/runner/work/setup-jfrog-cli/
+          ls /home/runner/work/setup-jfrog-cli/setup-jfrog-cli/
       - name: Attest
         uses: actions/attest-build-provenance@v2
         with:
