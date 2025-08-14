@@ -75,6 +75,7 @@ jobs:
       - name: Attest
         uses: actions/attest-build-provenance@v2
         with:
-          subject-path: '/home/runner/work/setup-jfrog-cli/setup-jfrog-cli/jfrog-setup-jfrog-cli-4.0.2.tgz'
+          subject-path: 'https://evidencetrial.jfrog.io/artifactory/carmit-prj-1-npm-local/%40jfrog/setup-jfrog-cli/-/%40jfrog/setup-jfrog-cli-4.0.2.tgz'
+          
         
         
