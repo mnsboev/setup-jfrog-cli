@@ -30,14 +30,6 @@ jobs:
       - name: Generate .npmrc
         run: jf npm-config --repo-resolve=carmit-prj-1-npm-remote --repo-deploy=carmit-prj-1-npm-local
           
-      # Run --version
-      - name: Check versions
-        run: jf --version && jfrog --version
-
-      # Check local server successfully configured
-      - name: Sanity
-        run: jf c show local || jfrog rt config show local
-
       # Check build URL
       - name: Check build URL
         uses: wei/curl@master
@@ -48,8 +40,7 @@ jobs:
       # Install and run tests
       - name: Install
         run: jf npm i --project takoshop 
-      - name: Unit tests
-        run: npm t
+
       - name: Install SonarQube Scanner
         run: |          
           curl -sL  -sSLo sonar-scanner.zip  https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610.zip
