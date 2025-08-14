@@ -62,9 +62,9 @@ jobs:
       #      -Dsonar.java.jdkHome=$JAVA_HOME \
       #      -Dsonar.verbose=true \
       #      -Dsonar.token=$SONAR_TOKEN
-      - name: get task id
-        run: |
-          cat $PWD/.scannerwork/report-task.txt
+      #- name: get task id
+      #  run: |
+      #    cat $PWD/.scannerwork/report-task.txt
       - name: publish to artifactory
         run: |
           jf npm publish --project takoshop  --registry https://${{ vars.JF_URL }}/artifactory/api/npm/carmit-prj-1-npm-local/
