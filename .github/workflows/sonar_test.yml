@@ -98,7 +98,7 @@ jobs:
       
       - name: Generate docker attestation
         id: attest
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v2
         with:
           subject-name: takoshop-docker-local/cli-docker/${{ github.run_number }}/manifest.json
           subject-digest: ${{ steps.build-and-push.outputs.docker_digest }}
