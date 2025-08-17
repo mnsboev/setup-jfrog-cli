@@ -100,7 +100,7 @@ jobs:
         id: attest
         uses: actions/attest-build-provenance@v2
         with:
-          subject-name: takoshop-docker-local/cli-docker/${{ github.run_number }}/manifest.json
+          subject-name: takoshop-docker-local/cli-docker/${{ github.run_number }}/list.manifest.json
           subject-digest: ${{ steps.build-and-push.outputs.docker_digest }}
       
       - name: check attestation bundle
