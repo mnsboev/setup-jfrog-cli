@@ -68,13 +68,6 @@ jobs:
       - name: publish to artifactory
         run: |
           jf npm publish --project takoshop  --registry https://${{ vars.JF_URL }}/artifactory/api/npm/carmit-prj-1-npm-local/
-      - name: check file system
-        run: |
-          pwd
-          echo "-------/home/runner/work/setup-jfrog-cli/---------"
-          ls /home/runner/work/setup-jfrog-cli/
-          echo "-------/home/runner/work/setup-jfrog-cli/setup-jfrog-cli/---------"
-          ls /home/runner/work/setup-jfrog-cli/setup-jfrog-cli/
 
       - name: Authenticate Docker
         uses: docker/login-action@v3
@@ -93,28 +86,22 @@ jobs:
           install: true 
           
       - name: docker build through 
+        id: build-and-push
         run: |  
           docker buildx ls
           jf docker --version
-          jf docker build --tag ${{ vars.JF_URL }}/carmit-prj-1-carmit-docker-local/cli-docker:1.0.0 --platform linux/amd64 --metadata-file  metadata.json --push .
+          jf docker build --tag ${{ vars.JF_URL }}/carmit-prj-1-carmit-docker-local/cli-docker:${{ github.run_number }} --platform linux/amd64 --metadata-file  metadata.json --push .
 
-      - name: get docker digest
-        id: set_vars
-        run: |  
-           echo "----------------"
-           cat metadata.json
-           echo "----------------"
-           digest=$(cat metadata.json | jq '.["containerimage.digest"]')
-           echo "digest=$digest"
-           echo "docker_digest=$digest" | tr -d '"' >> $GITHUB_OUTPUT
+          digest=$(cat metadata.json | jq '.["containerimage.digest"]')
+          echo "digest=$digest"
+          echo "docker_digest=$digest" | tr -d '"' >> $GITHUB_OUTPUT
       
       - name: Generate docker attestation
         id: attest
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ vars.JF_URL }}/carmit-prj-1-carmit-docker-local/cli-docker
-          subject-digest: ${{ steps.set_vars.outputs.docker_digest }}
-          push-to-registry: true
+          subject-name: carmit-prj-1-carmit-docker-local/cli-docker/${{ github.run_number }}/manifest.json
+          subject-digest: ${{ steps.build-and-push.outputs.docker_digest }}
       
       - name: check attestation bundle
         run: |
