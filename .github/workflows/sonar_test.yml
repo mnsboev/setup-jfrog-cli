@@ -6,7 +6,7 @@ permissions:
       attestations: write
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       # Checkout and install prerequisites
       - name: Checkout
