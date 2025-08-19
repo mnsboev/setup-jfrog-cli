@@ -90,7 +90,7 @@ jobs:
         run: |  
           docker buildx ls
           jf docker --version
-          jf docker build --tag ${{ vars.JF_URL }}/barber-shop-docker-local/cli-docker:${{ github.run_number }} --platform linux/amd64 --metadata-file  metadata.json --push .
+          jf docker build --tag ${{ vars.JF_URL }}/barber-shop-docker-local/book-service:${{ github.run_number }} --platform linux/amd64 --metadata-file  metadata.json --push .
 
           digest=$(cat metadata.json | jq '.["containerimage.digest"]')
           echo "digest=$digest"
@@ -100,7 +100,7 @@ jobs:
         id: attest
         uses: actions/attest-build-provenance@v2
         with:
-          subject-name: barber-shop-docker-local/cli-docker/${{ github.run_number }}/list.manifest.json
+          subject-name: barber-shop-docker-local/book-service/${{ github.run_number }}/list.manifest.json
           subject-digest: ${{ steps.build-and-push.outputs.docker_digest }}
       
       - name: check attestation bundle
