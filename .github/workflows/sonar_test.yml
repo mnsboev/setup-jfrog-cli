@@ -22,13 +22,13 @@ jobs:
         uses: jfrog/setup-jfrog-cli@v4
         env:
           JF_URL: https://${{ vars.JF_URL }}
-          JF_PROJECT: "takoshop"
+          JF_PROJECT: "barber-shop"
         with:
-         oidc-provider-name: jfrog-github-oidc
+         oidc-provider-name: github-barber-shop
       - name: Generate .npmrc
         run: | 
            jfrog c show
-           jf npm-config --global --repo-resolve=takoshop-npm-remote --repo-deploy=takoshop-npm-local
+           jf npm-config --global --repo-resolve=barber-shop-npm-remote --repo-deploy=barber-shop-npm-local
           
       # Check build URL
       - name: Check build URL
@@ -39,7 +39,7 @@ jobs:
 
       # Install and run tests
       - name: Install
-        run: jf npm i --project takoshop 
+        run: jf npm i --project barber-shop 
 
       - name: Install SonarQube Scanner
         run: |          
@@ -67,7 +67,7 @@ jobs:
           cat $PWD/.scannerwork/report-task.txt
       - name: publish to artifactory
         run: |
-          jf npm publish --project takoshop  --registry https://${{ vars.JF_URL }}/artifactory/api/npm/takoshop-npm-local/
+          jf npm publish --project barber-shop  --registry https://${{ vars.JF_URL }}/artifactory/api/npm/barber-shop-npm-local/
 
       - name: Authenticate Docker
         uses: docker/login-action@v3
@@ -90,7 +90,7 @@ jobs:
         run: |  
           docker buildx ls
           jf docker --version
-          jf docker build --tag ${{ vars.JF_URL }}/takoshop-docker-local/cli-docker:${{ github.run_number }} --platform linux/amd64 --metadata-file  metadata.json --push .
+          jf docker build --tag ${{ vars.JF_URL }}/barber-shop-docker-local/cli-docker:${{ github.run_number }} --platform linux/amd64 --metadata-file  metadata.json --push .
 
           digest=$(cat metadata.json | jq '.["containerimage.digest"]')
           echo "digest=$digest"
@@ -100,7 +100,7 @@ jobs:
         id: attest
         uses: actions/attest-build-provenance@v2
         with:
-          subject-name: takoshop-docker-local/cli-docker/${{ github.run_number }}/list.manifest.json
+          subject-name: barber-shop-docker-local/cli-docker/${{ github.run_number }}/list.manifest.json
           subject-digest: ${{ steps.build-and-push.outputs.docker_digest }}
       
       - name: check attestation bundle
