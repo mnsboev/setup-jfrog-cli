@@ -50,7 +50,7 @@ jobs:
 
       # Install and run tests
       - name: Install
-        run: jf npm i --project barber-shop 
+        run: jf npm i
 
       - name: Install SonarQube Scanner
         run: |          
