@@ -35,7 +35,6 @@ jobs:
          custom-server-id: evidence-prod
       - name: Reconfigure evidence-prod server
         run: |
-          jf c add evidence-prod --url ${{ env.JF_URL }} --access-token ${{ secrets.JFROG_ACCESS_TOKEN }}
           jf c use evidence-prod
           jf c show
       - name: Generate .npmrc
