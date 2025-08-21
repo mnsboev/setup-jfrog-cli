@@ -86,7 +86,7 @@ jobs:
 
       - name: create sonar evidence
         run: |
-          jf rt evd create --build-name Test-with-sonar --build-number ${{ github.run_number }} --use-sonar-predicate --key-alias PUBLIC-MISHA
+          jf evd create --build-name Test-with-sonar --build-number ${{ github.run_number }} --use-sonar-predicate --key-alias PUBLIC-MISHA
 
       - name: Authenticate Docker
         uses: docker/login-action@v3
