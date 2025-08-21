@@ -87,4 +87,3 @@ jobs:
         run: |
           jf evd create --build-name Test-with-sonar --build-number ${{ github.run_number }} --use-sonar-predicate --key-alias PUBLIC-MISHA
 
-
