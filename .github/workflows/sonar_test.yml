@@ -7,6 +7,11 @@ permissions:
 jobs:
   test:
     runs-on: self-hosted
+    env:
+      JFROG_CLI_SIGNING_KEY: /Users/mishas/dev/bash/private.pem
+      JFROG_CLI_INSECURE_TLS: "true"
+      JFROG_CLI_LOG_LEVEL: DEBUG
+      JF_URL: https://evidencetrial.jfrog.io/
     steps:
       # Checkout and install prerequisites
       - name: Checkout
@@ -21,7 +26,6 @@ jobs:
         id:   setup-cli
         uses: jfrog/setup-jfrog-cli@v4
         env:
-          JF_URL: https://${{ vars.JF_URL }}
           JF_PROJECT: "barber-shop"
         with:
          oidc-provider-name: github-barber-shop
@@ -68,6 +72,7 @@ jobs:
       - name: publish to artifactory
         run: |
           jf npm publish --project barber-shop  --registry https://${{ vars.JF_URL }}/artifactory/api/npm/barber-shop-npm-local/
+          jf evd create --project barber-shop --build-name --use-sonar-predicate Test-with-sonar --build-number ${{ github.run_number }}
 
       - name: Authenticate Docker
         uses: docker/login-action@v3
