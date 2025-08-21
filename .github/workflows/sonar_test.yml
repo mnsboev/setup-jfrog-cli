@@ -39,7 +39,6 @@ jobs:
           jf c show
       - name: Generate .npmrc
         run: | 
-           jfrog c show
            jf npm-config --global --repo-resolve=barber-shop-npm-remote --repo-deploy=barber-shop-npm-local
           
       # Check build URL
