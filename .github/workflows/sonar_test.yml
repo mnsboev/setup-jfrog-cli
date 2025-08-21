@@ -26,7 +26,9 @@ jobs:
         id:   setup-cli
         uses: jfrog/setup-jfrog-cli@v4
         env:
+          JF_URL: ${{ env.JF_URL }}
           JF_PROJECT: "barber-shop"
+          JF_ACCESS_TOKEN: ${{ secrets.JFROG_ACCESS_TOKEN }}
         with:
          custom-server-id: evidence-prod
       - name: Generate .npmrc
