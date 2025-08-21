@@ -28,7 +28,7 @@ jobs:
         env:
           JF_PROJECT: "barber-shop"
         with:
-         oidc-provider-name: github-barber-shop
+         custom-server-id: evidence-prod
       - name: Generate .npmrc
         run: | 
            jfrog c show
