@@ -79,6 +79,7 @@ jobs:
       - name: publish to artifactory
         run: |
           jf npm publish --project barber-shop  --registry https://${{ vars.JF_URL }}/artifactory/api/npm/barber-shop-npm-local/
+          jf rt build-publish Test-with-sonar ${{ github.run_number }}
           jf evd create --build-name Test-with-sonar --build-number ${{ github.run_number }} --use-sonar-predicate --key-alias PUBLIC-MISHA
 
       - name: Authenticate Docker
