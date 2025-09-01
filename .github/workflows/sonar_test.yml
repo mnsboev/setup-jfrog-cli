@@ -34,6 +34,9 @@ jobs:
          custom-server-id: evidence-prod
 
       # Install and run tests
+      - name: Configure npm
+        run: jf npm-config --project barber-shop
+
       - name: Install
         run: jf npm i --project barber-shop
           
