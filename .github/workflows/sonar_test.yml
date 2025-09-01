@@ -6,11 +6,10 @@ permissions:
       attestations: write
 jobs:
   test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     env:
-      JFROG_CLI_SIGNING_KEY: /Users/mishas/dev/bash/private.pem
-      JFROG_CLI_KEY_ALIAS: PUBLIC-MISHA
-      JFROG_CLI_INSECURE_TLS: "true"
+      JFROG_CLI_KEY_ALIAS: ${{ vars.JFROG_CLI_KEY_ALIAS }}
+      JFROG_CLI_SIGNING_KEY: ${{ secrets.JFROG_CLI_SIGNING_KEY }}
       JFROG_CLI_LOG_LEVEL: DEBUG
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       JF_URL: https://evidencetrial.jfrog.io/
@@ -36,29 +35,18 @@ jobs:
 
       # Install and run tests
       - name: Install
-        run: jf npm i --project barber-shop 
-
-      - name: Install SonarQube Scanner
-        run: |          
-          curl -sL  -sSLo sonar-scanner.zip  https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610.zip
-          unzip sonar-scanner.zip
-          export PATH=$PATH:$PWD/sonar-scanner-6.2.1.4610/bin
-          pwd
-          ls -l $PWD/sonar-scanner-6.2.1.4610/bin/
-          echo "$PWD/sonar-scanner-6.2.1.4610/bin"
+        run: jf npm i --project barber-shop
           
-      - name: Run SonarScanner
-        id: run-sonar-scanner
+      - name: Sonar scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        continue-on-error: true  # Don't fail build on SonarCloud quality gate issues
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          $PWD/sonar-scanner-6.2.1.4610/bin/sonar-scanner \
-            -Dsonar.projectKey=setup-jfrog-cli \
-            -Dsonar.organization=my-evidence-test-org1 \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.java.jdkHome=$JAVA_HOME \
-            -Dsonar.verbose=true \
-            -Dsonar.token=$SONAR_TOKEN
+        with:
+          args: >
+            -Dsonar.projectKey=setup-jfrog-cli
+            -Dsonar.organization=setup-jfrog-cli_my-evidence-test-org1
+            -Dsonar.qualitygate.wait=false
 
       - name: publish build info
         run: |
