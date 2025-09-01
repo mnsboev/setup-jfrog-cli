@@ -35,11 +35,11 @@ jobs:
 
       # Install and run tests
       - name: Configure npm
-        run: jf npm-config --project barber-shop
+        run: jf npm-config
 
       - name: Install
         run: jf npm i --project barber-shop
-          
+
       - name: Sonar scan
         uses: SonarSource/sonarqube-scan-action@v5
         continue-on-error: true  # Don't fail build on SonarCloud quality gate issues
