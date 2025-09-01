@@ -9,6 +9,7 @@ jobs:
     runs-on: self-hosted
     env:
       JFROG_CLI_SIGNING_KEY: /Users/mishas/dev/bash/private.pem
+      JFROG_CLI_KEY_ALIAS: PUBLIC-MISHA
       JFROG_CLI_INSECURE_TLS: "true"
       JFROG_CLI_LOG_LEVEL: DEBUG
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -30,22 +31,8 @@ jobs:
           JF_URL: ${{ env.JF_URL }}
           JF_ACCESS_TOKEN: ${{ secrets.JFROG_ACCESS_TOKEN }}
         with:
-         version: 2.78.3
+         version: 2.78.8
          custom-server-id: evidence-prod
-      - name: Reconfigure evidence-prod server
-        run: |
-          jf c use evidence-prod
-          jf c show
-      - name: Generate .npmrc
-        run: | 
-           jf npm-config --global --repo-resolve=barber-shop-npm-remote --repo-deploy=barber-shop-npm-local
-          
-      # Check build URL
-      - name: Check build URL
-        uses: wei/curl@master
-        with:
-          args: -I ${JFROG_CLI_BUILD_URL}
-        if: runner.os == 'Linux'
 
       # Install and run tests
       - name: Install
@@ -79,4 +66,4 @@ jobs:
 
       - name: create sonar evidence
         run: |
-          jf evd create --build-name Test-with-sonar --build-number ${{ github.run_number }} --use-sonar-predicate --key-alias PUBLIC-MISHA
+          jf evd create --build-name Test-with-sonar --build-number ${{ github.run_number }} --use-sonar-predicate
