@@ -35,7 +35,7 @@ jobs:
 
       # Install and run tests
       - name: Configure npm
-        run: jf npm-config
+        run: jf npm-config --repo-deploy barber-shop-local --repo-resolve barber-shop-remote
 
       - name: Install
         run: jf npm i --project barber-shop
