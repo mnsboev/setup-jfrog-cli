@@ -47,8 +47,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=setup-jfrog-cli
-            -Dsonar.organization=setup-jfrog-cli_my-evidence-test-org1
+            -Dsonar.projectKey=setup-jfrog-cli_my-evidence-test-org1
+            -Dsonar.organization=my-evidence-test-org1
             -Dsonar.qualitygate.wait=false
 
       - name: publish build info
