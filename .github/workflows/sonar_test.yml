@@ -45,7 +45,7 @@ jobs:
       - name: Install
         run: | 
           jf npm i --project barber-shop
-          jf npm publish --project barber-shop
+          jf npm publish --project barber-shop --build-name Test-with-sonar --build-number ${{ github.run_number }}
 
       - name: Sonar scan
         uses: SonarSource/sonarqube-scan-action@v5
