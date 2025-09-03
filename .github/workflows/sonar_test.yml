@@ -65,7 +65,7 @@ jobs:
 
       - name: publish build info
         run: |
-          jf rt build-publish Test-with-sonar ${{ github.run_number }}
+          jf rt build-publish Test-with-sonar ${{ github.run_number }} --project barber-shop
 
       - name: create sonar evidence
         run: |
