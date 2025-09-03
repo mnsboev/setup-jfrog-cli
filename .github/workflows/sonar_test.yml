@@ -43,7 +43,9 @@ jobs:
         run: jf npm-config --repo-deploy barber-shop-npm-local --repo-resolve barber-shop-npm-remote
 
       - name: Install
-        run: jf npm i --project barber-shop
+        run: | 
+          jf npm i --project barber-shop
+          jf npm publish --project barber-shop
 
       - name: Sonar scan
         uses: SonarSource/sonarqube-scan-action@v5
