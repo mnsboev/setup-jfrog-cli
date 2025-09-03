@@ -50,7 +50,7 @@ jobs:
         run: npm run build
 
       - name: Publish npm package
-        run: jf npm publish --project barber-shop --build-name Test-with-sonar --build-number ${{ github.run_number }}
+        run: jf npm publish --project barber-shop --build-name Test-with-sonar --build-number ${{ github.run_number }} --module-name npm-module
 
       - name: Sonar scan
         uses: SonarSource/sonarqube-scan-action@v5
